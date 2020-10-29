@@ -7,10 +7,12 @@
 
 <div>
     <h2>@Model.name</h2>
+    @using (Html.BeginForm("")) { 
+    }
     <ul>
         <li>Membership Type : @Model.MembershipType.Name</li>
         @if (Model.BirthDate != null) {
-        <li>Birth Date : @Model.BirthDate</li>
+        <li>Birth Date : @Model.BirthDate.ToString(string.Format("dd/MM/yyyy"))</li>
         }
     </ul>
     

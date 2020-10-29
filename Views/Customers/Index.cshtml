@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h2>Customers</h2>
+@Html.ActionLink("New Customer", "NewCustomerForm", "Customers" , null, new { @class="btn btn-primary" })
 <table id="customers" class="table table-bordered table-hover">
     <thead>
         <tr>
@@ -17,7 +18,7 @@
         @foreach (var customer in Model)
         {
         <tr>
-            <td><a href="~/Customers/Details/@customer.id">@customer.name</a></td>
+            <td>@Html.ActionLink(customer.name, "Edit", "Customers", new { id = customer.id }, new { id = customer.id})</td>
             <td>@customer.MembershipType.DiscountRate%</td>
             <td>@customer.MembershipType.Name</td>
         </tr>

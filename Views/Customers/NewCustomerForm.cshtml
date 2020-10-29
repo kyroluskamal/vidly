@@ -1,29 +1,37 @@
 ﻿@model vidly.ViewModels.NewCustomerFormViewModels
 @{
-    ViewBag.Title = "Add New Customer";
+    ViewBag.Title = Model.Formtitle();
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>New Customer</h2>
+<h2>@ViewBag.Title</h2>
+@Html.ValidationSummary(true, "Please fill the required filed")
 @using (Html.BeginForm("Create", "Customers"))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.customer.name)
         @Html.TextBoxFor(m => m.customer.name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.customer.name)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.customer.BirthDate)
-        @Html.TextBoxFor(m => m.customer.BirthDate, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.customer.BirthDate, "{0:d MMM yyyy}" ,new { @class = "form-control" })
+        @Html.ValidationMessageFor(m=>m.customer.BirthDate)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.customer.MembershipTypeId)
-        @Html.DropDownListFor(m => m.customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "name"), "Select Membership Types", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "name", Model.memId), "Select Membership Types", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m=>m.customer.MembershipTypeId)
     </div>
     <div class="form-check">
         <label class="form-check-label">
             @Html.CheckBoxFor(m => m.customer.IsSubscribedToNewsLetter) Is Subscribed
         </label>
     </div>
-    <button type="submit" class="btn btn-outline-primary" value="Save"></button>
+    @Html.Hidden(Model.custidAtt, (Model.customer != null) ? Model.customer.id : 0);
+    @Html.AntiForgeryToken();
+    <button type="submit" class="btn btn-primary" value="Save">Save</button>
 }
-
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval");
+}

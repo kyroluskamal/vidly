@@ -14,5 +14,7 @@ namespace vidly.Models
         public byte DiscountRate { get; set; }
         [StringLength(255)]
         public string Name { get; set; }
+        public static readonly byte unkonw = 0;
+        public static readonly byte PayAsYouGo = 1;
     }
 }
